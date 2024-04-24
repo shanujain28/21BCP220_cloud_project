@@ -1,177 +1,131 @@
-# Docker and Three-Tier Architecture
+![App picture](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/main_picture.jpg)
 
-## Introduction to Docker
+# Description :point_left:
+It's a web application for managing hospitals rooms and determining the patient's priority for isolation. The app provides a centralised hub for managing the patients and planning their distribution across hospital’s rooms. 
 
-Docker is a platform for developing, shipping, and running applications in containers. Containers allow developers to package an application with all of its dependencies into a standardized unit, ensuring that it will run consistently on any environment. Docker provides tools for building, deploying, and managing containers, making it easier to develop and deploy applications in various environments.
+It allows nurses to keep track of the patients and their diseases in real time and to have an overview over the patients and rooms, and better manage the rooms assignment across patients.
 
-## What is Three-Tier Architecture?
+# Live demo :rocket:
+https://nhs-app.herokuapp.com/
+* username: admin
+* password: admin
 
-Three-tier architecture is a software architecture pattern where an application is divided into three logical tiers or layers: the presentation tier, the application logic tier, and the data storage tier. Each tier has a specific role and responsibility:
+# Youtube video
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Q9wTakyRWi4
+" target="_blank"><img src="http://img.youtube.com/vi/Q9wTakyRWi4/0.jpg" 
+alt="Youtube video" width="240" height="180" border="10" /></a>
 
-## Using Docker in Three-Tier Architecture
+# Prerequisites
+- [x] Node.js 6.9.1 or later - install from https://nodejs.org/
 
-Docker is particularly useful in implementing and deploying applications based on the three-tier architecture:
-
-### 1. Database Tier
-
-In the database tier, Docker can be used to containerize the database management system (DBMS) such as PostgreSQL, MySQL, or MongoDB. Docker containers provide a lightweight and portable way to run databases, ensuring consistency across different environments.
-
-### 2. Backend Tier
-
-For the backend tier, Docker containers can encapsulate the application logic, including the web servers, APIs, and microservices. Developers can package their backend code and dependencies into Docker images, making it easy to deploy and scale the application components independently.
-
-### 3. Frontend Tier
-
-In the frontend tier, Docker can be used to package and deploy the presentation layer components such as static web assets, JavaScript frameworks like React or Angular, and web servers like Nginx or Apache. Docker containers enable developers to build and deploy frontend applications with ease, ensuring consistency and reliability.
-
-
-# Part 1 - Setting Up the Database Tier with MongoDB
-
-In this part of the tutorial, we will set up the database tier using MongoDB.
-
-## Step 1: Dockerfile for MongoDB
-
-```dockerfile
-# Use the official MongoDB image as the base image
-FROM mongo:latest
-
-# Set container name with roll number
-ENV MONGO_CONTAINER_NAME="mongodb "
+# Installing - easy :electric_plug:
+1.	Download the repository
 ```
-
-## Step 2: building and running the database
-
-```dockerfile
-# Build the Docker image for MongoDB
-docker build -t mongodb  .
-
-# Run the MongoDB container
-docker run -d --name mongodb  -p 27017:27017 mongodb
-
+git clone https://github.com/margiki/NHS-nodejs-webapp
 ```
+2.	Open the Terminal (Linux & MacOS) or PowerShell (Windows) and change directory to the project folder.
+3.	Type ‘npm install’ in the Terminal (PowerShell) and press Enter. All the dependencies would be installed.
+4.	Go back to the Terminal (PowerShell) and be sure that you are pointing inside the project folder. To open the application, type ‘node app.js’ and press Enter.
+5.	The application should be live on the local port 3000.  
+6.	Type http://localhost:3000/ into a browser.
+7.	To login use the username: admin  and the password: admin
+8.	Now you should be inside the application
 
-## Step 3: Connecting MongoDB Container to Network
-```dockerfile
-# Create a Docker network
-docker network create my-network
+# How to use it :book:
+### Dashboard
 
-# Connect MongoDB container to the network
-docker network connect my-network mongodb
-```
+Data about patients and rooms is available here. The page is split into three tables. 
 
----
-layout: part2
-title: Part 2 - Setting Up the Backend Tier
-permalink: /part2/
----
+![Dashboard](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/dashboard.jpg)
 
-<!-- Content for Docker part 2 -->
+![Dashboard](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/dasboard_2.jpg)
 
-# Part 2 - Setting Up the Backend Tier with Node.js
+To clear the red warning sign you need to go on the patient’s personal page. To do that, you have to double click on his name. By clicking on the ‘Update button’ on the bottom of the page, the patient’s diagnosis in updated for the next 24 hours (consequently, the red warning sign disappears).
 
-In this part of the tutorial, we will set up the backend tier using Node.js.
+### Add patient page
 
-## Step 1: Dockerfile for Node.js Backend
+You can add a new patient in the system with his personal details and his diseases. The application automatically computes the score of the patient based on the entered diseases
 
-```dockerfile
-# Use the official Node.js image as the base image
-FROM node:latest
+![Add patient page](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/add_new_patient.jpg)
 
-# Set container name with roll number
-ENV NODE_CONTAINER_NAME="nodejs-backend"
+### Patient page
 
-# Create and set working directory
-WORKDIR /app
+Double click on a patient name on the dashboard to get here.
+![Patient page](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/patient_page.jpg)
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+### System settings
 
-# Install dependencies
-RUN npm install
+The control center of the application. It allows users to manage the diseases & rooms of the Hospital and create new accounts
 
-# Copy backend source code
-COPY . .
+![System Settings](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/system_settings.jpg)
 
-# Expose port 5000
-EXPOSE 5000
+# App Modules and Code organisation
+### Modules
 
-# Command to run the backend server
-CMD ["node", "server.js"]
-```
+Module|Core	|Patients|Diseases|Rooms 
+------|-----|--------|--------|----
+Functionality	|- login system | - add / delete patients | - add / delete diseases | 	- assign rooms to patients
+.|- add users | - update patient's diagnosis | - assign disease to patients | - add / remove rooms
+.|- view dashboard	| - view patient’s page | 
+.|.| - retrieve patient's information	
+
+### Code organisation :open_file_folder:
+
+Folder | Content | Responsability
+------|-----|--------
+/public	| |	Contains the public files, such as CSS, fonts and scripts.
+/routes	| |	Manage the HTTP requests. Is divided into smaller modules responsible for disjoint tasks.
+.	|/app.js| 	Renders dashboard page
+.	|/disease.js| 	Responsible for diseases
+.	|/login.js|	Responsible for logging in
+.	|/patients.js|	Responsible for patients
+.	|/rooms.js|	Responsible for rooms
+.	|/settings.js|	Renders settings page
+.	|/users.js|	Add new users and logout
+/server	| |	Defines the database and Schemas
+.	|/db/mongoose.js| 	Database settings
+.	|/models| 	Defines Schemas
+/views		| |Render pages
+.	|/layouts|	The core layout; each page is rendered inside the layout
+.	|/(other files)|	Contains specific visual changes for every page
+
+# Technologies
+
+### Backend
+![Nodejs - ExpressJS](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/backend.jpg)
+
+### Frontend
+![jQuery](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/frontend.jpg)
+
+### Database
+![MongoDB - Mongoose](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/database.jpg)
+
+### Databse Schema
+![Database schema](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/database_design.jpg)
+
+**The available application is connected to a MongoDB database online.** If you want to change the database to another one, you need to go: NHS app folder -> server -> db -> mongoose.js
+
+Inside the file, you need to change the database link from
+mongoose.connect("mongodb://admin:admin123@ds145220.mlab.com:45220/nhs-app"); to mongoose.connect("your-database-link");
+
+# REST Apis
+The backend and frontend communicate through REST Apis. On the frontend, we make Ajax requests using jQuery to the following routes: 
+
+URI |	Returns
+----|----
+/app/getdiseases |	returns information about all diseases in the system
+/app/getpatients |       	returns information about all patients in the system
+/app/getpatient/:hospitalNumber |	returns information about a specific patient
+/app/getrooms	| returns information about the rooms in the system
+
+# Known bugs :bug:
+1. On some mobiles devices (iPhone, iPad) assigning rooms to patients is not working because mobile browsers doesn’t interpret the double-click. Also, the user can’t enter the patient's page because of the same reason. However, on LG mobile devices this feature works. 
+
+# License 
+Free to use, copy and distribute. :money_with_wings:
 
 
-## Step 2: Building and Running Node.js Backend Container
 
-``` dockerfile
-# Build the Docker image for Node.js backend
-docker build -t nodejs-backend .
 
-# Run the Node.js backend container
-docker run -d --name nodejs-backend -p 5000:5000 --network my-network nodejs-backend
-```
 
----
-layout: part3
-title: Part 3 - Setting Up the Frontend Tier
-permalink: /part3/
----
 
-<!-- Content for Docker part 3 -->
-
-# Part 3 - Setting Up the Frontend Tier with React
-
-In this part of the tutorial, we will set up the frontend tier using React.
-
-## Step 1: Dockerfile for React Frontend
-
-```dockerfile
-# Use the official Node.js image as the base image for building React app
-FROM node:latest as build
-
-# Set container name with roll number
-ENV REACT_CONTAINER_NAME="react-frontend"
-
-# Create and set working directory
-WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy frontend source code
-COPY . .
-
-# Build React app
-RUN npm run build
-
-# Use NGINX for serving React app
-FROM nginx:alpine
-
-# Copy build files from build stage
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
-
-# Command to start NGINX
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-## Step 2: Building and Running React Frontend Container
- ``` dockerfile
-# Build the Docker image for React frontend
-docker build -t react-frontend  .
-
-# Run the React frontend container
-docker run -d --name react-frontend -p 80:80 --network my-network react-frontend 
-```
-
-## Conclusion
-
-Docker simplifies the development, deployment, and management of applications based on the three-tier architecture. By using Docker containers for each tier, developers can achieve consistency, portability, and scalability in their applications, leading to faster development cycles and more efficient deployment processes.
-
-## Thank you for visiting the documentation
-
-## By Krupa Siddh - 21BCP345
