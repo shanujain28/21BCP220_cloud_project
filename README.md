@@ -1,131 +1,209 @@
-![App picture](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/main_picture.jpg)
 
-# Description :point_left:
-It's a web application for managing hospitals rooms and determining the patient's priority for isolation. The app provides a centralised hub for managing the patients and planning their distribution across hospital’s rooms. 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker and Three-Tier Architecture</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+    }
 
-It allows nurses to keep track of the patients and their diseases in real time and to have an overview over the patients and rooms, and better manage the rooms assignment across patients.
+    /* Container styling */
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
 
-# Live demo :rocket:
-https://nhs-app.herokuapp.com/
-* username: admin
-* password: admin
+    /* Header hover effect */
+    h1:hover,
+    h2:hover,
+    h3:hover {
+        color: #007bff;
+        cursor: pointer;
+    }
+    /* Add some spacing between sections */
+    h2 {
+        margin-top: 2rem;
+    }
 
-# Youtube video
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Q9wTakyRWi4
-" target="_blank"><img src="http://img.youtube.com/vi/Q9wTakyRWi4/0.jpg" 
-alt="Youtube video" width="240" height="180" border="10" /></a>
+    h3 {
+        margin-top: 1.5rem;
+    }
 
-# Prerequisites
-- [x] Node.js 6.9.1 or later - install from https://nodejs.org/
+    /* Style code blocks */
+    pre {
+        background-color: #f5f5f5;
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+    }
 
-# Installing - easy :electric_plug:
-1.	Download the repository
-```
-git clone https://github.com/margiki/NHS-nodejs-webapp
-```
-2.	Open the Terminal (Linux & MacOS) or PowerShell (Windows) and change directory to the project folder.
-3.	Type ‘npm install’ in the Terminal (PowerShell) and press Enter. All the dependencies would be installed.
-4.	Go back to the Terminal (PowerShell) and be sure that you are pointing inside the project folder. To open the application, type ‘node app.js’ and press Enter.
-5.	The application should be live on the local port 3000.  
-6.	Type http://localhost:3000/ into a browser.
-7.	To login use the username: admin  and the password: admin
-8.	Now you should be inside the application
+    /* Add some box-shadow for depth */
+    pre, p {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-# How to use it :book:
-### Dashboard
+    /* Style links */
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
 
-Data about patients and rooms is available here. The page is split into three tables. 
+    a:hover {
+        text-decoration: underline;
+    }
 
-![Dashboard](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/dashboard.jpg)
+    /* Add some spacing for paragraphs */
+    p {
+        margin-bottom: 1rem;
+    }
 
-![Dashboard](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/dasboard_2.jpg)
+    /* Style the footer */
+    footer {
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem 0;
+        background-color: #f5f5f5;
+    }
 
-To clear the red warning sign you need to go on the patient’s personal page. To do that, you have to double click on his name. By clicking on the ‘Update button’ on the bottom of the page, the patient’s diagnosis in updated for the next 24 hours (consequently, the red warning sign disappears).
+    
+</style>
+</head>
+<body>
+    <h1>This blog is created by Swanubhuti jain_21BCP220</h1>
+    <h1>Docker and Three-Tier Architecture</h1>
 
-### Add patient page
+    <h2>Introduction to Docker</h2>
+    <p>Docker is a platform for developing, shipping, and running applications in containers. Containers allow developers to package an application with all of its dependencies into a standardized unit, ensuring that it will run consistently on any environment. Docker provides tools for building, deploying, and managing containers, making it easier to develop and deploy applications in various environments.</p>
 
-You can add a new patient in the system with his personal details and his diseases. The application automatically computes the score of the patient based on the entered diseases
+    <h2>What is Three-Tier Architecture?</h2>
+    <p>Three-tier architecture is a software architecture pattern where an application is divided into three logical tiers or layers: the presentation tier, the application logic tier, and the data storage tier. Each tier has a specific role and responsibility:</p>
 
-![Add patient page](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/add_new_patient.jpg)
+    <h2>Using Docker in Three-Tier Architecture</h2>
 
-### Patient page
+    <h3>1. Database Tier</h3>
+    <p>In the database tier, Docker can be used to containerize the database management system (DBMS) such as PostgreSQL, MySQL, or MongoDB. Docker containers provide a lightweight and portable way to run databases, ensuring consistency across different environments.</p>
 
-Double click on a patient name on the dashboard to get here.
-![Patient page](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/patient_page.jpg)
+    <h3>2. Backend Tier</h3>
+    <p>For the backend tier, Docker containers can encapsulate the application logic, including the web servers, APIs, and microservices. Developers can package their backend code and dependencies into Docker images, making it easy to deploy and scale the application components independently.</p>
 
-### System settings
+    <h3>3. Frontend Tier</h3>
+    <p>In the frontend tier, Docker can be used to package and deploy the presentation layer components such as static web assets, JavaScript frameworks like React or Angular, and web servers like Nginx or Apache. Docker containers enable developers to build and deploy frontend applications with ease, ensuring consistency and reliability.</p>
 
-The control center of the application. It allows users to manage the diseases & rooms of the Hospital and create new accounts
+    <h2>Part 1 - Setting Up the Database Tier with MongoDB</h2>
 
-![System Settings](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/system_settings.jpg)
+    <h3>Step 1: Dockerfile for MongoDB</h3>
+    <pre><code># Use the official MongoDB image as the base image
+FROM mongo:latest
 
-# App Modules and Code organisation
-### Modules
+# Set container name with roll number
+EXPOSE 27017
+    </code></pre>
 
-Module|Core	|Patients|Diseases|Rooms 
-------|-----|--------|--------|----
-Functionality	|- login system | - add / delete patients | - add / delete diseases | 	- assign rooms to patients
-.|- add users | - update patient's diagnosis | - assign disease to patients | - add / remove rooms
-.|- view dashboard	| - view patient’s page | 
-.|.| - retrieve patient's information	
+    <h3>Step 2: Building and Running the Database</h3>
+    <pre><code># Build the Docker image for MongoDB
+docker build -t mongodb  .
 
-### Code organisation :open_file_folder:
+# Run the MongoDB container
+docker run -d --name mongodb  -p 27017:27017 mongodb
+    </code></pre>
 
-Folder | Content | Responsability
-------|-----|--------
-/public	| |	Contains the public files, such as CSS, fonts and scripts.
-/routes	| |	Manage the HTTP requests. Is divided into smaller modules responsible for disjoint tasks.
-.	|/app.js| 	Renders dashboard page
-.	|/disease.js| 	Responsible for diseases
-.	|/login.js|	Responsible for logging in
-.	|/patients.js|	Responsible for patients
-.	|/rooms.js|	Responsible for rooms
-.	|/settings.js|	Renders settings page
-.	|/users.js|	Add new users and logout
-/server	| |	Defines the database and Schemas
-.	|/db/mongoose.js| 	Database settings
-.	|/models| 	Defines Schemas
-/views		| |Render pages
-.	|/layouts|	The core layout; each page is rendered inside the layout
-.	|/(other files)|	Contains specific visual changes for every page
+    <h3>Step 3: Connecting MongoDB Container to Network</h3>
+    <pre><code># Create a Docker network
+docker network create my-network
 
-# Technologies
+# Connect MongoDB container to the network
+docker network connect my-network mongodb
+    </code></pre>
 
-### Backend
-![Nodejs - ExpressJS](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/backend.jpg)
+    <h2>Part 2 - Setting Up the Backend Tier with Node.js</h2>
 
-### Frontend
-![jQuery](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/frontend.jpg)
+    <h3>Step 1: Dockerfile for Node.js Backend</h3>
+    <pre><code># Use the official Node.js image as the base image
+FROM node:latest
 
-### Database
-![MongoDB - Mongoose](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/database.jpg)
+# Set container name with roll number
 
-### Databse Schema
-![Database schema](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/database_design.jpg)
+# Create and set working directory
+WORKDIR /app
 
-**The available application is connected to a MongoDB database online.** If you want to change the database to another one, you need to go: NHS app folder -> server -> db -> mongoose.js
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-Inside the file, you need to change the database link from
-mongoose.connect("mongodb://admin:admin123@ds145220.mlab.com:45220/nhs-app"); to mongoose.connect("your-database-link");
+# Install dependencies
+RUN npm install
 
-# REST Apis
-The backend and frontend communicate through REST Apis. On the frontend, we make Ajax requests using jQuery to the following routes: 
+# Copy backend source code
+COPY . .
 
-URI |	Returns
-----|----
-/app/getdiseases |	returns information about all diseases in the system
-/app/getpatients |       	returns information about all patients in the system
-/app/getpatient/:hospitalNumber |	returns information about a specific patient
-/app/getrooms	| returns information about the rooms in the system
+# Expose port 5000
+EXPOSE 5000
 
-# Known bugs :bug:
-1. On some mobiles devices (iPhone, iPad) assigning rooms to patients is not working because mobile browsers doesn’t interpret the double-click. Also, the user can’t enter the patient's page because of the same reason. However, on LG mobile devices this feature works. 
+# Command to run the backend server
+CMD ["node", "server.js"]
+    </code></pre>
 
-# License 
-Free to use, copy and distribute. :money_with_wings:
+    <h3>Step 2: Building and Running Node.js Backend Container</h3>
+    <pre><code># Build the Docker image for Node.js backend
+docker build -t nodejs-backend .
 
+# Run the Node.js backend container
+docker run -d --name nodejs-backend -p 5000:5000 --network my-network nodejs-backend
+    </code></pre>
 
+    <h2>Part 3 - Setting Up the Frontend Tier with React</h2>
 
+    <h3>Step 1: Dockerfile for React Frontend</h3>
+    <pre><code># Use the official Node.js image as the base image for building React app
+FROM node:latest as build
 
+# Create and set working directory
+WORKDIR /app
 
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
+# Install dependencies
+RUN npm install
+
+# Copy frontend source code
+COPY . .
+
+# Build React app
+RUN npm run build
+
+# Use NGINX for serving React app
+FROM nginx:alpine
+
+# Copy build files from build stage
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Command to start NGINX
+CMD ["nginx", "-g", "daemon off;"]
+    </code></pre>
+
+    <h3>Step 2: Building and Running React Frontend Container</h3>
+    <pre><code># Build the Docker image for React frontend
+docker build -t react-frontend  .
+
+# Run the React frontend container
+docker run -d --name react-frontend -p 80:80 --network my-network react-frontend 
+    </code></pre>
+
+    <h2>Conclusion</h2>
+    <p>Docker simplifies the development, deployment, and management of applications based on the three-tier architecture. By using Docker containers for each tier, developers can achieve consistency, portability, and scalability in their applications, leading to faster development cycles and more efficient deployment processes.</p>
+
+    <h2>Thank you for visiting the documentation</h2>
+</body>
+</html>
